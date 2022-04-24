@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang chủ</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container-fluid px-0 pt-3" >
+
+        <session class="content py-5" >
+            <div class="container py-4">
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <h1 class="text-center py-5 text-white" style="font-weight:bold;">Hệ thống gợi ý sách</h1>
+                        <form class="py-3" action="{{url_for('process')}}" method="post">
+                            <div class="form-group">
+                                <label for="book_name">Nhập tên sách: </label>
+                                <input type="text" id="book_name" name="book_name" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary" value="Nhập">
+                            </div>
+                        </form>
+                        {% if error_input: %}
+                            <div class="alert alert-danger">{{ error_input }}</div>
+                        {% endif %}
+
+
+                        {% if value_input: %}
+                        <div class="alert alert-success">
+                            <p class="text-left">== Các quyển sách giống với "{{ title_input }}" ==</p>
+                            {% for val in value_input: %}
+                            <li>{{ val }}</li>
+                            {% endfor %}
+                            <p class="text-left">== Thời gian thực thi: {{ time_input }} giây ==</p>
+                        </div>
+                        {% endif %}
+
+                        <hr>
+                        <form class="py-3" action="{{url_for('process_select')}}" method="post">
+
+                            <div class="form-group">
+                                <label for="sl_book_name">Chọn sách: </label>
+                                <select name="sl_book_name" id="sl_book_name" class="form-control">
+                                    {% for val in select_value %}
+                                    <option value="{{ val }}">{{ val }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary" value="Chọn">
+                            </div>
+                        </form>
+                        {% if error_select: %}
+                            <div class="alert alert-danger">{{ error_select }}</div>
+                        {% endif %}
+
+                        {% if value_select: %}
+                        <div class="alert alert-success">
+                            <p class="text-left">== Các quyển sách giống với "{{ title_select }}" ==</p>
+                            {% for val in value_select: %}
+                            <li>{{ val }}</li>
+                            {% endfor %}
+
+                            <p class="text-left">== Thời gian thực thi: {{ time_select }} giây ==</p>
+                        </div>
+                        {% endif %}
+                        <a href="/" >Quay lại trang chủ</a>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+            </div>
+        </session>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+</body>
+</html>
